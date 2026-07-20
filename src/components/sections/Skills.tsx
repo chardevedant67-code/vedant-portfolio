@@ -7,9 +7,16 @@ import { skills } from "@/lib/data";
 export default function Skills() {
   return (
     <section id="skills" className="relative section-pad container-px overflow-hidden">
-      {/* ambient background glows local to this section */}
-      <div className="pointer-events-none absolute -top-20 left-1/4 h-72 w-72 -translate-x-1/2 rounded-full bg-neon-purple/20 blur-[100px]" />
-      <div className="pointer-events-none absolute bottom-0 right-1/4 h-80 w-80 translate-x-1/2 rounded-full bg-neon-blue/20 blur-[110px]" />
+      {/* ambient background glows local to this section — radial-gradient instead
+          of a blurred solid div, same soft look without a compositor blur pass */}
+      <div
+        className="pointer-events-none absolute -top-20 left-1/4 h-72 w-72 -translate-x-1/2 rounded-full"
+        style={{ background: "radial-gradient(circle, var(--neon-purple) 0%, transparent 70%)", opacity: 0.2 }}
+      />
+      <div
+        className="pointer-events-none absolute bottom-0 right-1/4 h-80 w-80 translate-x-1/2 rounded-full"
+        style={{ background: "radial-gradient(circle, var(--neon-blue) 0%, transparent 70%)", opacity: 0.2 }}
+      />
 
       <div className="relative mx-auto max-w-6xl">
         <Reveal>

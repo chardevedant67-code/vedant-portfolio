@@ -289,3 +289,26 @@ body {
   box-shadow: 0 0 20px rgba(176, 77, 255, 0.35), 0 0 50px rgba(77, 234, 255, 0.2);
   transform: translateY(-3px);
 }
+
+/* backdrop-filter blur is one of the most GPU-expensive properties to keep
+   compositing every scroll frame; mobile GPUs feel it far more than desktop,
+   so trim the radius there instead of paying full cost on every glass panel */
+@media (max-width: 768px) {
+  .glass,
+  .glass-strong,
+  .hero-btn-glass,
+  .hero-social-icon {
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

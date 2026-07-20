@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
+import dynamic from "next/dynamic";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
 import Loader from "@/components/Loader";
 import Nav from "@/components/Nav";
-import CommandPalette from "@/components/CommandPalette";
+
+// Hidden until a user hits Cmd/Ctrl+K — code-split out of the main bundle
+// instead of parsing its framer-motion overlay + icon set on every load.
+const CommandPalette = dynamic(() => import("@/components/CommandPalette"));
 
 const inter = Inter({
   variable: "--font-inter",

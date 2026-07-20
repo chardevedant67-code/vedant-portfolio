@@ -13,30 +13,47 @@ export default function CustomCursor() {
 
     const pos = { x: 0, y: 0 };
     const ring = { x: 0, y: 0 };
+    let lastTarget: EventTarget | null = null;
+    let isHidden = true;
+    let lastHover = false;
 
+    // Only the cheap ref writes happen on the raw mousemove event, which can
+    // fire far faster than the display refresh rate on high-polling-rate mice.
+    // The DOM writes, hover detection (closest() walks the tree — not free),
+    // and any state updates are deferred to the rAF loop below so they run at
+    // most once per rendered frame instead of once per input event.
     const onMove = (e: MouseEvent) => {
       pos.x = e.clientX;
       pos.y = e.clientY;
-      setHidden(false);
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0) translate(-50%, -50%)`;
+      lastTarget = e.target;
+      if (isHidden) {
+        isHidden = false;
+        setHidden(false);
       }
-      const target = e.target as HTMLElement;
-      setHover(!!target.closest("a, button, [data-cursor-hover]"));
     };
 
     let raf = 0;
     const animate = () => {
       ring.x += (pos.x - ring.x) * 0.18;
       ring.y += (pos.y - ring.y) * 0.18;
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0) translate(-50%, -50%)`;
+      }
       if (ringRef.current) {
         ringRef.current.style.transform = `translate3d(${ring.x}px, ${ring.y}px, 0) translate(-50%, -50%)`;
+      }
+      const isHover = !!(lastTarget as HTMLElement | null)?.closest?.(
+        "a, button, [data-cursor-hover]"
+      );
+      if (isHover !== lastHover) {
+        lastHover = isHover;
+        setHover(isHover);
       }
       raf = requestAnimationFrame(animate);
     };
     raf = requestAnimationFrame(animate);
 
-    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mousemove", onMove, { passive: true });
     const onLeave = () => setHidden(true);
     document.documentElement.addEventListener("mouseleave", onLeave);
 
