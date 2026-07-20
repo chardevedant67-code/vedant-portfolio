@@ -144,6 +144,32 @@ export const achievementTimeline: TimelineItem[] = [
   { icon: Globe2, label: "Web of Science", sublabel: "Indexed", color: "#4D9DFF" },
 ];
 
+export type Certificate = {
+  id: string;
+  title: string;
+  organization: string;
+  issueDate: string;
+  credentialId?: string;
+  description: string;
+  skills: string[];
+  image: string;
+  pdfUrl: string;
+};
+
+export const certificates: Certificate[] = [
+  {
+    id: "icccnet-2026",
+    title: "Certificate of Participation — ICCCNet-2026",
+    organization: "Manchester Metropolitan University",
+    issueDate: "August 2026",
+    description:
+      'Awarded for presenting and co-authoring the paper "Text-Based Mental Health Detection" at the 6th International Conference on Computing and Communication Networks (ICCCNet-2026), held 17–19 August 2026 in Manchester, United Kingdom.',
+    skills: ["Academic Research", "NLP", "Mental Health Detection", "Conference Presentation"],
+    image: "/certificates/icccnet-2026.png",
+    pdfUrl: "/certificates/icccnet-2026-certificate.pdf",
+  },
+];
+
 export const education = [
   {
     degree: "Bachelor of Computer Applications",

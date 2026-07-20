@@ -12,7 +12,7 @@ export default function Contact() {
     <section id="contact" className="relative section-pad container-px overflow-hidden">
       <div className="mx-auto max-w-6xl">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="mb-3 font-mono text-xs tracking-[0.3em] text-neon-cyan">07 • CONTACT</p>
+          <p className="mb-3 font-mono text-xs tracking-[0.3em] text-neon-cyan">08 • CONTACT</p>
           <h2 className="font-display text-4xl md:text-6xl font-extrabold text-white">
             Let&apos;s Build Something{" "}
             <span className="hero-name-blue text-glow font-extrabold">Intelligent.</span>

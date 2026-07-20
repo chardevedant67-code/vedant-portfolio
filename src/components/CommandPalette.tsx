@@ -8,6 +8,7 @@ import {
   Briefcase,
   FolderGit2,
   Trophy,
+  Award,
   GraduationCap,
   Mail,
   Download,
@@ -54,6 +55,7 @@ export default function CommandPalette() {
     { label: "Experience", icon: <Briefcase size={16} />, action: () => goto("experience"), group: "Navigate" },
     { label: "Projects", icon: <FolderGit2 size={16} />, action: () => goto("projects"), group: "Navigate" },
     { label: "Achievements", icon: <Trophy size={16} />, action: () => goto("achievements"), group: "Navigate" },
+    { label: "Certificates", icon: <Award size={16} />, action: () => goto("certificates"), group: "Navigate" },
     { label: "Education", icon: <GraduationCap size={16} />, action: () => goto("education"), group: "Navigate" },
     { label: "Contact", icon: <Mail size={16} />, action: () => goto("contact"), group: "Navigate" },
     {

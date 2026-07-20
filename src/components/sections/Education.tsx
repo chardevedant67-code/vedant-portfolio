@@ -7,7 +7,7 @@ export default function Education() {
     <section id="education" className="relative section-pad container-px">
       <div className="mx-auto max-w-4xl">
         <Reveal>
-          <p className="mb-3 font-mono text-xs tracking-[0.3em] text-neon-cyan">06 · EDUCATION</p>
+          <p className="mb-3 font-mono text-xs tracking-[0.3em] text-neon-cyan">07 · EDUCATION</p>
           <h2 className="font-display text-4xl md:text-5xl font-semibold text-white">
             Academic <span className="gradient-text">foundation.</span>
           </h2>
