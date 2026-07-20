@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -29,18 +29,27 @@ export default function ContactForm() {
     formState: { errors },
   } = useForm<ContactFormValues>({ resolver: zodResolver(contactSchema) });
 
+  const timeoutsRef = useRef<number[]>([]);
+  useEffect(() => {
+    return () => {
+      timeoutsRef.current.forEach(window.clearTimeout);
+    };
+  }, []);
+
   const onSubmit = (data: ContactFormValues) => {
     setStatus("loading");
-    window.setTimeout(() => {
+    const t1 = window.setTimeout(() => {
       const subject = encodeURIComponent(data.subject);
       const body = encodeURIComponent(`${data.message}\n\n— ${data.name} (${data.email})`);
       window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
       setStatus("success");
-      window.setTimeout(() => {
+      const t2 = window.setTimeout(() => {
         setStatus("idle");
         reset();
       }, 2600);
+      timeoutsRef.current.push(t2);
     }, 900);
+    timeoutsRef.current.push(t1);
   };
 
   return (

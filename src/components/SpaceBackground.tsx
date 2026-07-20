@@ -41,9 +41,19 @@ export default function SpaceBackground() {
     let width = window.innerWidth;
     let height = window.innerHeight;
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
-    let isMobile = width < 768 || window.matchMedia("(pointer: coarse)").matches;
 
-    let STAR_COUNT = Math.min(isMobile ? 140 : 320, Math.floor((width * height) / 4500));
+    // hardwareConcurrency doesn't change at runtime, so this only needs checking once —
+    // low core counts (older laptops, budget Android/iOS devices) get the same lighter
+    // treatment as touch/small-viewport devices, not just phones.
+    const isLowPower =
+      typeof navigator !== "undefined" &&
+      typeof navigator.hardwareConcurrency === "number" &&
+      navigator.hardwareConcurrency <= 4;
+
+    let reduceComplexity =
+      width < 768 || window.matchMedia("(pointer: coarse)").matches || isLowPower;
+
+    let STAR_COUNT = Math.min(reduceComplexity ? 140 : 320, Math.floor((width * height) / 4500));
     let stars: Star[] = [];
     let shooters: Shooter[] = [];
     let nebulaSprites: NebulaSprite[] = [];
@@ -77,8 +87,9 @@ export default function SpaceBackground() {
       width = window.innerWidth;
       height = window.innerHeight;
       dpr = Math.min(window.devicePixelRatio || 1, 2);
-      isMobile = width < 768 || window.matchMedia("(pointer: coarse)").matches;
-      STAR_COUNT = Math.min(isMobile ? 140 : 320, Math.floor((width * height) / 4500));
+      reduceComplexity =
+        width < 768 || window.matchMedia("(pointer: coarse)").matches || isLowPower;
+      STAR_COUNT = Math.min(reduceComplexity ? 140 : 320, Math.floor((width * height) / 4500));
       canvas!.width = width * dpr;
       canvas!.height = height * dpr;
       canvas!.style.width = width + "px";
@@ -177,8 +188,8 @@ export default function SpaceBackground() {
         }
       }
 
-      // shooting stars — skipped on mobile, extra flourish not worth the cost there
-      if (!prefersReduced && !isMobile) {
+      // shooting stars — skipped on mobile/low-power, extra flourish not worth the cost there
+      if (!prefersReduced && !reduceComplexity) {
         maybeSpawnShooter();
         shooters = shooters.filter((sh) => sh.life < sh.maxLife);
         for (const sh of shooters) {
@@ -198,8 +209,8 @@ export default function SpaceBackground() {
         }
       }
 
-      // small orbiting solar system, top-right, subtle — skipped on mobile
-      if (!isMobile) {
+      // small orbiting solar system, top-right, subtle — skipped on mobile/low-power
+      if (!reduceComplexity) {
         const cx = width * 0.85;
         const cy = height * 0.22;
         const orbits = [46, 74, 104];

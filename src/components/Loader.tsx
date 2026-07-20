@@ -12,6 +12,7 @@ export default function Loader() {
   useEffect(() => {
     document.body.style.overflow = "hidden";
     let raf: number;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
     const start = performance.now();
     const DURATION = 2200;
 
@@ -22,14 +23,18 @@ export default function Loader() {
       if (pct < 100) {
         raf = requestAnimationFrame(tick);
       } else {
-        setTimeout(() => {
+        timeoutId = setTimeout(() => {
           setDone(true);
           document.body.style.overflow = "";
         }, 400);
       }
     }
     raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(timeoutId);
+      document.body.style.overflow = "";
+    };
   }, []);
 
   return (
