@@ -168,6 +168,42 @@ export const certificates: Certificate[] = [
     image: "/certificates/icccnet-2026.png",
     pdfUrl: "/certificates/icccnet-2026-certificate.pdf",
   },
+  {
+    id: "fullstack-dapp-react-web3",
+    title: "Full-Stack DApp Development with React and Web3",
+    organization: "Packt (via Coursera)",
+    issueDate: "July 2025",
+    credentialId: "P6QVJXI3QKXS",
+    description:
+      "Completed an online non-credit course covering full-stack decentralized application development, building React front-ends integrated with Web3 smart contract interactions.",
+    skills: ["React", "Web3", "DApp Development", "Smart Contracts", "JavaScript"],
+    image: "/certificates/fullstack-dapp-react-web3.png",
+    pdfUrl: "/certificates/fullstack-dapp-react-web3-certificate.pdf",
+  },
+  {
+    id: "intro-front-end-development",
+    title: "Introduction to Front-End Development",
+    organization: "Meta (via Coursera)",
+    issueDate: "July 2025",
+    credentialId: "GU30RVRPURZB",
+    description:
+      "Completed an online non-credit course introducing core front-end development concepts, including HTML, CSS, and the fundamentals of building responsive user interfaces.",
+    skills: ["HTML", "CSS", "Front-End Development", "Web Design"],
+    image: "/certificates/intro-front-end-development.png",
+    pdfUrl: "/certificates/intro-front-end-development-certificate.pdf",
+  },
+  {
+    id: "programming-with-javascript",
+    title: "Programming with JavaScript",
+    organization: "Meta (via Coursera)",
+    issueDate: "July 2025",
+    credentialId: "FTQ3BW0GE46R",
+    description:
+      "Completed an online non-credit course covering JavaScript programming fundamentals, including syntax, functions, DOM manipulation, and problem-solving techniques.",
+    skills: ["JavaScript", "Programming Fundamentals", "DOM Manipulation"],
+    image: "/certificates/programming-with-javascript.png",
+    pdfUrl: "/certificates/programming-with-javascript-certificate.pdf",
+  },
 ];
 
 export const education = [
