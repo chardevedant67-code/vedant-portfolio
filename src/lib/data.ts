@@ -123,6 +123,16 @@ export const projects: Project[] = [
     github: "#",
     caseStudy: "#",
   },
+  {
+    title: "YouTube Shorts Automation Platform",
+    subtitle: "AI Automation Platform",
+    description:
+      "An end-to-end AI-powered YouTube Shorts automation platform built with n8n that discovers trending topics, generates scripts and scenes with AI, produces voiceovers, renders videos, uploads to YouTube, and generates thumbnails, SEO metadata, and publishing analytics without manual intervention.",
+    tags: ["n8n", "Python", "OpenAI", "Gemini", "YouTube API", "Automation"],
+    mockup: "automation",
+    image: "/projects/youtube-shorts-automation.png",
+    github: "https://github.com/chardevedant67-code/youtube-shorts-automation",
+  },
 ];
 
 export const researchPaper = {

@@ -48,15 +48,33 @@ export default function Projects() {
                     </div>
 
                     <div className="mt-6 flex items-center gap-5 border-t border-white/10 pt-4 text-sm">
-                      <a href={p.live} data-cursor-hover className="flex items-center gap-1.5 text-white/70 hover:text-white transition-colors">
-                        <ExternalLink size={14} /> Live Demo
-                      </a>
-                      <a href={p.github} data-cursor-hover className="flex items-center gap-1.5 text-white/70 hover:text-white transition-colors">
-                        <FaGithub size={14} /> GitHub
-                      </a>
-                      <a href={p.caseStudy} data-cursor-hover className="flex items-center gap-1.5 text-white/70 hover:text-white transition-colors">
-                        <FileText size={14} /> Case Study
-                      </a>
+                      {p.live ? (
+                        <a href={p.live} data-cursor-hover className="flex items-center gap-1.5 text-white/70 hover:text-white transition-colors">
+                          <ExternalLink size={14} /> Live Demo
+                        </a>
+                      ) : (
+                        <span className="flex items-center gap-1.5 text-white/30 cursor-not-allowed">
+                          <ExternalLink size={14} /> Coming Soon
+                        </span>
+                      )}
+                      {p.github ? (
+                        <a href={p.github} data-cursor-hover className="flex items-center gap-1.5 text-white/70 hover:text-white transition-colors">
+                          <FaGithub size={14} /> GitHub
+                        </a>
+                      ) : (
+                        <span className="flex items-center gap-1.5 text-white/30 cursor-not-allowed">
+                          <FaGithub size={14} /> GitHub
+                        </span>
+                      )}
+                      {p.caseStudy ? (
+                        <a href={p.caseStudy} data-cursor-hover className="flex items-center gap-1.5 text-white/70 hover:text-white transition-colors">
+                          <FileText size={14} /> Case Study
+                        </a>
+                      ) : (
+                        <span className="flex items-center gap-1.5 text-white/30 cursor-not-allowed">
+                          <FileText size={14} /> Case Study
+                        </span>
+                      )}
                     </div>
                   </div>
                 </TiltCard>
