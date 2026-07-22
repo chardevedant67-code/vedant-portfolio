@@ -13,6 +13,10 @@ export default function TiltCard({
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
+  const onMouseEnter = () => {
+    if (ref.current) ref.current.style.willChange = "transform";
+  };
+
   const onMouseMove = (e: React.MouseEvent) => {
     const el = ref.current;
     if (!el) return;
@@ -26,19 +30,30 @@ export default function TiltCard({
     el.style.setProperty("--my", `${(py + 0.5) * 100}%`);
   };
 
+  // will-change promotes an element to its own GPU layer; dropping it once the
+  // return-to-rest transition finishes (rather than keeping it set for the
+  // component's whole lifetime) avoids paying that memory cost for every
+  // tilt card on the page simultaneously, most of which are never touched.
   const onMouseLeave = () => {
-    if (ref.current) {
-      ref.current.style.transform = "perspective(900px) rotateY(0deg) rotateX(0deg)";
-    }
+    const el = ref.current;
+    if (!el) return;
+    el.style.transform = "perspective(900px) rotateY(0deg) rotateX(0deg)";
+    el.addEventListener(
+      "transitionend",
+      () => {
+        el.style.willChange = "auto";
+      },
+      { once: true }
+    );
   };
 
   return (
     <div
       ref={ref}
+      onMouseEnter={onMouseEnter}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       className={`transition-transform duration-300 ease-out [transform-style:preserve-3d] ${className}`}
-      style={{ willChange: "transform" }}
     >
       {children}
     </div>

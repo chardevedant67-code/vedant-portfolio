@@ -28,6 +28,10 @@ export default function SkillCard({ skill, index }: { skill: Skill; index: numbe
     [index]
   );
 
+  const onMouseEnter = () => {
+    if (ref.current) ref.current.style.willChange = "transform";
+  };
+
   const onMouseMove = (e: React.MouseEvent) => {
     const el = ref.current;
     if (!el) return;
@@ -41,11 +45,14 @@ export default function SkillCard({ skill, index }: { skill: Skill; index: numbe
     }deg) translateY(-8px) scale(1.03)`;
   };
 
+  // transform isn't in this card's CSS transition list (only box-shadow/background-color
+  // are), so it snaps back immediately — will-change can drop right away instead of
+  // waiting on a transitionend that will never fire for this property.
   const onMouseLeave = () => {
-    if (ref.current) {
-      ref.current.style.transform =
-        "perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)";
-    }
+    const el = ref.current;
+    if (!el) return;
+    el.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)";
+    el.style.willChange = "auto";
   };
 
   return (
@@ -64,9 +71,10 @@ export default function SkillCard({ skill, index }: { skill: Skill; index: numbe
 
       <div
         ref={ref}
+        onMouseEnter={onMouseEnter}
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
-        className="shimmer-border relative aspect-square overflow-hidden rounded-[20px] border border-white/10 bg-white/[0.03] shadow-[0_8px_30px_rgba(0,0,0,0.35)] backdrop-blur-md md:backdrop-blur-xl transition-[box-shadow,background-color] duration-300 ease-out will-change-transform group-hover:bg-white/[0.06] group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+        className="shimmer-border relative aspect-square overflow-hidden rounded-[20px] border border-white/10 bg-white/[0.03] shadow-[0_8px_30px_rgba(0,0,0,0.35)] backdrop-blur-md md:backdrop-blur-xl transition-[box-shadow,background-color] duration-300 ease-out group-hover:bg-white/[0.06] group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
         style={{ transformStyle: "preserve-3d" }}
       >
         {/* mouse spotlight */}

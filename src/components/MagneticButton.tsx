@@ -18,6 +18,10 @@ export default function MagneticButton({
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
+  const onMouseEnter = () => {
+    if (ref.current) ref.current.style.willChange = "transform";
+  };
+
   const onMouseMove = (e: React.MouseEvent) => {
     const el = ref.current;
     if (!el) return;
@@ -28,7 +32,16 @@ export default function MagneticButton({
   };
 
   const onMouseLeave = () => {
-    if (ref.current) ref.current.style.transform = "translate(0,0)";
+    const el = ref.current;
+    if (!el) return;
+    el.style.transform = "translate(0,0)";
+    el.addEventListener(
+      "transitionend",
+      () => {
+        el.style.willChange = "auto";
+      },
+      { once: true }
+    );
   };
 
   const Comp = href ? motion.a : motion.button;
@@ -36,10 +49,10 @@ export default function MagneticButton({
   return (
     <div
       ref={ref}
+      onMouseEnter={onMouseEnter}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       className="inline-block transition-transform duration-200 ease-out"
-      style={{ willChange: "transform" }}
     >
       <Comp
         {...(href
